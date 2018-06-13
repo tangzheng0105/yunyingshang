@@ -1,7 +1,9 @@
-var host = 'http://47.95.220.122:90'
+var host = "https://"+window.location.host;
+// var host = 'http://47.95.220.122:90'
 var _phoneNum, _userType, _userCode, dropload
 var pages = 1
 var isLastPage = false
+var isUserInited = false
 var dataStatistics = {
     "yesterdayOrderTempPirce": 0.00,
     "todayAddAgent": 0,
@@ -25,6 +27,7 @@ $(document).ready(function () {
 });
 
 function initUserList() {
+    isUserInited = true
     dropload = $('.user-body').dropload({
         scrollArea: window,
         domDown: {
@@ -164,7 +167,7 @@ function getUserList2(callback) {
             session: $.cookie('session'),
             phoneNum: _phoneNum,
             userType: _userType,
-            pageSize: 2,
+            pageSize: 10,
             pages: pages
         },
         success: function (res) {
@@ -240,6 +243,7 @@ function chooseUser() {
     $('#statistic-text').removeClass('active')
     $('#user-icon').attr('src', './assets/img/user-active.png')
     $('#user-text').addClass('active')
+    if(isUserInited) return
     initUserList()
 }
 
@@ -274,7 +278,7 @@ function upLevelSubmit() {
                 $('.user-body-wrap').html('')
                 dropload.noData(false)
                 dropload.resetload()
-                getUserList2(function (res) { })
+                // getUserList2(function (res) { })
             } else {
                 $.alert({
                     title: '提示!',
@@ -309,7 +313,7 @@ function chooseType(val) {
     $('.user-body-wrap').html('')
     dropload.noData(false)
     dropload.resetload()
-    getUserList2(function (res) { })
+    // getUserList2(function (res) { })
 }
 
 function searchUser() {
@@ -321,5 +325,5 @@ function searchUser() {
     $('.user-body-wrap').html('')
     dropload.noData(false)
     dropload.resetload()
-    getUserList2(function (res) { })
+    // getUserList2(function (res) { })
 }

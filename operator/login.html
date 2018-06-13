@@ -56,7 +56,8 @@
 <script src="./assets/js/jquery.cookie.js"></script>
 
 <script>
-    host = 'http://47.95.220.122:90'
+    // host = 'http://47.95.220.122:90'
+    var host = "https://"+window.location.host;
     function form_submit() {
         console.log($("#loginName").val())
         var loginName = $("#loginName").val()
