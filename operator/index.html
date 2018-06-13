@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>数据统计</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/css/dropload.css">
+    <link rel="stylesheet" href="./assets/css/jquery.circliful.css">
+    <link rel="stylesheet" href="./assets/css/index.css">
+
+</head>
+
+<body>
+    <div id="statistic" style="display: block;">
+        <div class="teamview data-table">
+            <div class="title">
+                <img class="icon" src="./assets/img/1.png" alt=""> 团队概览
+            </div>
+            <diV class="total">
+                <div class="total-data">8457</div>
+                <div class="total-text">总粉丝人数</div>
+            </diV>
+            <div class="circle-wrap">
+                <div class="circle">
+                    <div id="userCountRate" data-dimension="150" data-text="35%" data-info="代理总数" data-width="20" data-fontsize="25" data-percent="35"
+                        data-fgcolor="#ff6b60" data-bgcolor="#ffada7"></div>
+                </div>
+                <div class="circle">
+                    <div id="fansRate" data-dimension="150" data-text="85%" data-info="直属粉丝" data-width="20" data-fontsize="25" data-percent="85"
+                        data-fgcolor="#ff8d60" data-bgcolor="#fdbea5"></div>
+                </div>
+            </div>
+            <div class="count-data">
+                <div class="count-item">
+                    <div>
+                        <span class="icon-circle color1-fg"></span>
+                        代理数：
+                        <span id="agentCount">4722</span>
+                    </div>
+                    <div>
+                        <span class="icon-circle color1-bg"></span>
+                        买家数：
+                        <span id="userCount">4722</span>
+                    </div>
+                </div>
+                <div class="count-item">
+                    <div>
+                        <span class="icon-circle color2-fg"></span>
+                        直属粉丝：
+                        <span id="levelACount">4722</span>
+                    </div>
+                    <div>
+                        <span class="icon-circle color2-bg"></span>
+                        推荐粉丝：
+                        <span id="promotionCount">4722</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="data-table">
+            <div class="title">
+                <img class="icon" src="./assets/img/2.png" alt=""> 数据统计
+            </div>
+            <div class="table-ctrl">
+                <div class="ctr-wrap">
+                    <div onclick="chooseToday()" class="active2 today-data">今日</div>
+                    <div onclick="chooseYesterday()" class="active yesterday-data">昨日</div>
+                </div>
+            </div>
+            <div class="table-wrap">
+                <div class="table-item">
+                    <div class="table-subitem">
+                        <div id="addUser" class="text-bold">10</div>
+                        <div class="text-grey">新增买家</div>
+                    </div>
+                    <div class="table-subitem">
+                        <div id="addAgent" class="text-bold">10</div>
+                        <div class="text-grey">新增代理</div>
+                    </div>
+                </div>
+                <div class="table-item">
+                    <div class="table-subitem">
+                        <div id="orderCount" class="text-bold">10</div>
+                        <div class="text-grey">订单笔数</div>
+                    </div>
+                    <div class="table-subitem">
+                        <div id="orderTempPirce" class="text-bold">10</div>
+                        <div class="text-grey">预估佣金</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="earning data-table">
+            <div class="title">
+                <img class="icon" src="./assets/img/2.png" alt=""> 收益概览
+            </div>
+            <div class="earning-data">
+                <div>截至当前总收益</div>
+                <div id="total-earning">8888.88</div>
+                <!-- <div>超越50%的人</div> -->
+            </div>
+            <div class="estimate-wrap">
+                <div class="estimate-item">
+                    <div id="preMonthSettle">￥888</div>
+                    <div>上月结算</div>
+                </div>
+                <div class="estimate-item">
+                    <div id="curMonthTemp">￥888</div>
+                    <div>本月预估</div>
+                </div>
+                <div class="estimate-item">
+                    <div id="preMonthTemp">￥888</div>
+                    <div>上月预估</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="user" style="display: none;">
+        <div class="user-header">
+            <input id="search" type="text" placeholder="请输入手机号搜索">
+            <span onclick="searchUser()" id="search-btn">搜索</span>
+        </div>
+        <div class="user-body">
+            <div class="user-body-header">
+                <div class="user-body-manage">用户管理</div>
+                <select onchange="chooseType(this.options[this.options.selectedIndex].value);" class="user-body-select" name="" id="">
+                    <option value="all">全部</option>
+                    <option value="agent">代理</option>
+                    <option value="user">买家</option>
+                </select>
+            </div>
+            <div class="user-body-wrap">
+
+            </div>
+        </div>
+    </div>
+    <div class="bottom-tab">
+        <div onclick="chooseStatistic()" class="tab-item">
+            <img id="statistic-icon" class="icon" src="./assets/img/count-active.png" alt="">
+            <div id="statistic-text" class="active">统计</div>
+        </div>
+        <div onclick="chooseUser()" class="tab-item">
+            <img id="user-icon" class="icon" src="./assets/img/user.png" alt="">
+            <div id="user-text">用户</div>
+        </div>
+    </div>
+    <div style="display: none;" id="alert">
+        <div class="alert-body">
+            <div>确定要升级该用户为代理吗？</div>
+            <div class="alert-btn-area">
+                <span onclick="alertCancel()" class="alert-btn alert-cancel">取消</span>
+                <span onclick="upLevelSubmit()" class="alert-btn alert-submit">确定</span>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="./assets/js/utils.js"></script>
+<script src="./assets/js/jquery.cookie.js"></script>
+<script src="./assets/js/dropload.min.js"></script>
+<script src="./assets/js/jquery.circliful.js"></script>
+<script src="./assets/js/jquery-confirm.min.js"></script>
+<script>
+    var host = 'http://47.95.220.122:90'
+    var _phoneNum, _userType, _userCode, dropload
+    var pages = 1
+    var isLastPage = false
+    var dataStatistics = {
+        "yesterdayOrderTempPirce": 0.00,
+        "todayAddAgent": 0,
+        "yesterdayOrderCount": 0,
+        "todayOrderCount": 0,
+        "todayOrderTempPirce": 0.00,
+        "yesterdayAddUser": 0,
+        "todayAddUser": 0,
+        "yesterdayAddAgent": 0
+    }
+
+    $(document).ready(function () {
+        if (!$.cookie('session')) {
+            myRedirect('./login.html')
+        } else {
+            console.log($.cookie('session'))
+            getTeamInfo()
+            getDataStatistics()
+            getCommissionInfo()
+            initUserList()
+        }
+    });
+
+    function initUserList() {
+        dropload = $('.user-body').dropload({
+            scrollArea: window,
+            domDown: {
+                domClass: 'dropload-down',
+                domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
+                domLoad: '<div class="dropload-load">○加载中...</div>',
+                domNoData: '<div class="dropload-noData">没有更多数据</div>'
+            },
+            loadDownFn: function (me) {
+                console.log(me)
+                if (isLastPage) {
+                    me.noData();
+                    me.resetload();
+                    return
+                }
+                getUserList2(function (res) {
+                    if (!res.Data.lastPage) {
+                        pages += 1
+                    } else {
+                        isLastPage = true
+                    }
+                    me.resetload();
+                })
+            }
+        });
+    }
+
+    function getTeamInfo() {
+        $.ajax({
+            method: "POST",
+            url: host + '/operator/teamInfo',
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session')
+            },
+            success: function (res) {
+                if (res.status == 0) {
+                    myRedirect('./login.html')
+                }
+                $('.total-data').html(res.Data.allUserCount)
+                $('#agentCount').html(res.Data.agentCount)
+                $('#levelACount').html(res.Data.levelACount)
+                $('#promotionCount').html(res.Data.promotionCount)
+                $('#userCount').html(res.Data.userCount)
+                $('#userCountRate').attr('data-percent', res.Data.agentCount / res.Data.allUserCount * 100)
+                $('#userCountRate').attr('data-text', (res.Data.agentCount / res.Data.allUserCount * 100).toFixed(2) + '%')
+                $('#fansRate').attr('data-percent', res.Data.levelACount / res.Data.allUserCount * 100)
+                $('#fansRate').attr('data-text', (res.Data.levelACount / res.Data.allUserCount * 100).toFixed(2) + '%')
+                $('#userCountRate').circliful();
+                $('#fansRate').circliful();
+            }
+        })
+    }
+
+    function getDataStatistics() {
+        $.ajax({
+            method: "POST",
+            url: host + "/operator/dataStatistics",
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session')
+            },
+            success: function (res) {
+                if (res.status == 0) {
+                    myRedirect('./login.html')
+                }
+                dataStatistics = res.Data
+                setTodayData()
+            }
+        })
+    }
+
+    function getCommissionInfo() {
+        $.ajax({
+            method: "POST",
+            url: host + "/operator/commissionInfo",
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session')
+            },
+            success: function (res) {
+                if (res.status == 0) {
+                    myRedirect('./login.html')
+                }
+                $('#total-earning').html(res.Data.total)
+                $('#preMonthSettle').html(res.Data.preMonthSettle)
+                $('#preMonthTemp').html(res.Data.preMonthTemp)
+                $('#curMonthTemp').html(res.Data.curMonthTemp)
+            }
+        })
+    }
+
+    function getUserList() {
+        $.ajax({
+            method: "POST",
+            url: host + '/operator/userList',
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session'),
+                phoneNum: _phoneNum,
+                userType: _userType,
+                pageSize: 10,
+                pages: pages
+            },
+            success: function (res) {
+                res.Data.list.forEach(function (item) {
+                    var _html = `<div class="user-body-item">
+                                <div class="user-body-avatar">
+                                    <img class="avatar" src="${item.photoUrl ? item.photoUrl : './assets/img/header.png'}" alt="">
+                                </div>
+                                <div class="user-body-info">
+                                    <div class="user-body-top">
+                                        ${item.phoneNum}
+                                        <img class="label" src="./assets/img/${item.userType == 1 ? 'agent-label' : 'user-label'}.png" alt="">
+                                    </div>
+                                    <div class="user-body-middle">
+                                        <span>${item.nickName ? item.nickName : ''}</span>
+                                        <span class="user-body-time">
+                                            <img class="icon" src="./assets/img/clock.png" alt="">${item.regTime.split(' ')[0]}</span>
+                                    </div>
+                                </div>
+                                <div onclick="upLevel('${item.userCode}')" style="display:${item.userType == 0 && GetQueryString('type') != 1 ? 'block' : 'none'}" class="up-btn">升级</div>
+                            </div>`
+                    $('.user-body-wrap').append(_html)
+                });
+
+            }
+        })
+    }
+
+    function getUserList2(callback) {
+        $.ajax({
+            method: "POST",
+            url: host + '/operator/userList',
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session'),
+                phoneNum: _phoneNum,
+                userType: _userType,
+                pageSize: 2,
+                pages: pages
+            },
+            success: function (res) {
+                // console.log(res)                
+                res.Data.list.forEach(function (item) {
+                    var _html = `<div class="user-body-item">
+                                <div class="user-body-avatar">
+                                    <img class="avatar" src="${item.photoUrl ? item.photoUrl : './assets/img/header.png'}" alt="">
+                                </div>
+                                <div class="user-body-info">
+                                    <div class="user-body-top">
+                                        ${item.phoneNum}
+                                        <img class="label" src="./assets/img/${item.userType == 1 ? 'agent-label' : 'user-label'}.png" alt="">
+                                    </div>
+                                    <div class="user-body-middle">
+                                        <span>${item.nickName ? item.nickName : ''}</span>
+                                        <span class="user-body-time">
+                                            <img class="icon" src="./assets/img/clock.png" alt="">${item.regTime.split(' ')[0]}</span>
+                                    </div>
+                                </div>
+                                <div onclick="upLevel('${item.userCode}')" style="display:${item.userType == 0 && GetQueryString('type') != 1 ? 'block' : 'none'}" class="up-btn">升级</div>
+                            </div>`
+                    $('.user-body-wrap').append(_html)
+                });
+                callback(res)
+            }
+        })
+    }
+
+    function setTodayData() {
+        $('#addUser').html(dataStatistics.todayAddUser)
+        $('#orderCount').html(dataStatistics.todayOrderCount)
+        $('#addAgent').html(dataStatistics.todayAddAgent)
+        $('#orderTempPirce').html(dataStatistics.todayOrderTempPirce)
+    }
+
+    function setYesterdayData() {
+        $('#addUser').html(dataStatistics.yesterdayAddUser)
+        $('#orderCount').html(dataStatistics.yesterdayOrderCount)
+        $('#addAgent').html(dataStatistics.yesterdayAddAgent)
+        $('#orderTempPirce').html(dataStatistics.yesterdayOrderTempPirce)
+    }
+
+    function chooseToday() {
+        setTodayData()
+        $('.today-data').addClass('active2')
+        $('.today-data').removeClass('active')
+        $('.yesterday-data').addClass('active')
+        $('.yesterday-data').removeClass('active2')
+    }
+
+    function chooseYesterday() {
+        setYesterdayData()
+        $('.today-data').addClass('active')
+        $('.today-data').removeClass('active2')
+        $('.yesterday-data').addClass('active2')
+        $('.yesterday-data').removeClass('active')
+    }
+
+    function chooseStatistic() {
+        $('#statistic').css('display', 'block')
+        $('#user').css('display', 'none')
+        $('#statistic-icon').attr('src', './assets/img/count-active.png')
+        $('#statistic-text').addClass('active')
+        $('#user-icon').attr('src', './assets/img/user.png')
+        $('#user-text').removeClass('active')
+    }
+
+    function chooseUser() {
+        $('#statistic').css('display', 'none')
+        $('#user').css('display', 'block')
+        $('#statistic-icon').attr('src', './assets/img/count.png')
+        $('#statistic-text').removeClass('active')
+        $('#user-icon').attr('src', './assets/img/user-active.png')
+        $('#user-text').addClass('active')
+    }
+
+    function upLevel(userCode) {
+        console.log('up level:' + userCode)
+        _userCode = userCode
+        $('#alert').css('display', 'block')
+    }
+
+    function alertCancel() {
+        $('#alert').css('display', 'none')
+    }
+
+    function upLevelSubmit() {
+        $.ajax({
+            method: "POST",
+            url: host + "/operator/userToAgent",
+            data: {
+                loginName: GetQueryString('loginName'),
+                session: $.cookie('session'),
+                userCode: _userCode
+            },
+            success: function (res) {
+                console.log(res)
+                if (res.status == 1) {
+                    $.alert({
+                        title: '提示!',
+                        content: '用户升级成功!',
+                        useBootstrap: false,
+                        boxWidth: '70%'
+                    });
+                    $('.user-body-wrap').html('')
+                    dropload.noData(false)
+                    dropload.resetload()
+                    getUserList2(function (res) { })
+                } else {
+                    $.alert({
+                        title: '提示!',
+                        content: res.errorMsg,
+                        useBootstrap: false,
+                        boxWidth: '70%'
+                    });
+                }
+                $('#alert').css('display', 'none')
+            }
+        })
+    }
+
+    function chooseType(val) {
+        // console.log(val)
+        // _phoneNum = null
+        pages = 1
+        isLastPage = false
+        switch (val) {
+            case 'all':
+                _userType = null
+                break
+            case 'agent':
+                _userType = 1
+                break
+            case 'user':
+                _userType = 0
+                break
+            default:
+                break
+        }
+        $('.user-body-wrap').html('')
+        dropload.noData(false)
+        dropload.resetload()
+        getUserList2(function (res) { })
+    }
+
+    function searchUser() {
+        _userType = null
+        isLastPage = false
+        pages = 1
+        _phoneNum = $('#search').val()
+        console.log(_phoneNum)
+        $('.user-body-wrap').html('')
+        dropload.noData(false)
+        dropload.resetload()
+        getUserList2(function (res) { })
+    }
+
+</script>
+
+</html>
