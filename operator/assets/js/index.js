@@ -1,5 +1,7 @@
 var host = "https://"+window.location.host;
+// console.log(host)
 // var host = 'http://47.95.220.122:90'
+// var host = 'https://api.51los.com'
 var _phoneNum, _userType, _userCode, dropload
 var pages = 1
 var isLastPage = false
@@ -72,10 +74,10 @@ function getTeamInfo() {
             $('#levelACount').html(res.Data.levelACount)
             $('#promotionCount').html(res.Data.promotionCount)
             $('#userCount').html(res.Data.userCount)
-            $('#userCountRate').attr('data-percent', res.Data.agentCount / res.Data.allUserCount * 100)
-            $('#userCountRate').attr('data-text', (res.Data.agentCount / res.Data.allUserCount * 100).toFixed(2) + '%')
-            $('#fansRate').attr('data-percent', res.Data.levelACount / res.Data.allUserCount * 100)
-            $('#fansRate').attr('data-text', (res.Data.levelACount / res.Data.allUserCount * 100).toFixed(2) + '%')
+            $('#userCountRate').attr('data-percent', res.Data.allUserCount == 0 ? 0 : res.Data.agentCount / res.Data.allUserCount * 100)
+            $('#userCountRate').attr('data-text', (res.Data.allUserCount == 0 ? 0 : res.Data.agentCount / res.Data.allUserCount * 100).toFixed(2) + '%')
+            $('#fansRate').attr('data-percent', res.Data.allUserCount == 0 ? 0 : res.Data.levelACount / res.Data.allUserCount * 100)
+            $('#fansRate').attr('data-text', (res.Data.allUserCount == 0 ? 0 : res.Data.levelACount / res.Data.allUserCount * 100).toFixed(2) + '%')
             $('#userCountRate').circliful();
             $('#fansRate').circliful();
         }
